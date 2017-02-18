@@ -203,6 +203,11 @@ AC_ARG_WITH(gstreamer-0.10,
 	[with_gstreamer010=${withval}],
 	[with_gstreamer010=auto])
 
+AC_ARG_WITH(gstreamer-1.5,
+	AS_HELP_STRING([--with-gstreamer-1.5],[build GStreamer 1.5 plugin]),
+	[with_gstreamer15=${withval}],
+	[with_gstreamer15=auto])
+
 AS_IF([test "$with_gstreamer" != no], [
 
 	PKG_CHECK_MODULES(GST, [
@@ -233,6 +238,26 @@ AS_IF([test "$with_gstreamer" != no], [
 		])
 ])
 
+AS_IF([test "$with_gstreamer15" != no], [
+
+	PKG_CHECK_MODULES(GST15, [
+		gstreamer-1.5 >= 1.5
+		gstreamer-base-1.5 >= 1.5
+		],
+		[
+		with_gstreamer15=yes
+		GST_MAJORMINOR=1.5
+		gstplugin15dir="\$(libdir)/gstreamer-$GST_MAJORMINOR"
+		],
+		[
+		AS_IF([test "$with_gstreamer" = yes], [
+			AC_MSG_ERROR([GStreamer 1.5 support was requested but GStreamer 1.5 libraries are not available])
+		])
+
+		with_gstreamer15=no
+		])
+])
+
 AS_IF([test "$with_gstreamer010" != no], [
   
 	PKG_CHECK_MODULES(GST010, [
@@ -254,8 +279,10 @@ AS_IF([test "$with_gstreamer010" != no], [
 ])
 
 AC_SUBST(gstplugindir)
+AC_SUBST(gstplugin15dir)
 AC_SUBST(gstplugin010dir)
 
+AM_CONDITIONAL(WITH_GSTREAMER15, test "$with_gstreamer15" = yes)
 AM_CONDITIONAL(WITH_GSTREAMER, test "$with_gstreamer" = yes)
 AM_CONDITIONAL(HAVE_GST_CHECK, test "$have_gst_check" = yes)
 AM_CONDITIONAL(WITH_GSTREAMER010, test "$with_gstreamer010" = yes)
