@@ -2527,7 +2527,7 @@ static CandidateCheckPair *priv_add_peer_reflexive_pair (NiceAgent *agent, guint
   else
     pair->priority = nice_candidate_pair_priority (pair->remote->priority,
         pair->local->priority);
-  pair->nominated = FALSE;
+  pair->nominated = parent_pair->nominated;
   pair->controlling = agent->controlling_mode;
   pair->prflx_priority = ensure_unique_priority (component,
       peer_reflexive_candidate_priority (agent, local_cand));
