@@ -715,7 +715,7 @@ static gboolean priv_conn_keepalive_retransmissions_tick (gpointer pointer)
               "but media was received. Suspecting keepalive lost because of "
               "network bottleneck", pair->keepalive.agent);
         } else {
-          nice_debug ("Agent %p : Keepalive conncheck timed out!! "
+          nice_debug ("XXXXXXXXXXXXX:FAILED:Agent %p : Keepalive conncheck timed out!! "
               "peer probably lost connection", pair->keepalive.agent);
           agent_signal_component_state_change (pair->keepalive.agent,
               pair->keepalive.stream_id, pair->keepalive.component_id,
@@ -1492,6 +1492,7 @@ static void priv_update_check_list_failed_components (NiceAgent *agent, NiceStre
      * Set the component to FAILED only if it actually had remote candidates
      * that failed.. */
     if (i == NULL && comp != NULL && comp->remote_candidates != NULL)
+      nice_debug("XXXXXXXXXXXXX:FAILED:NICE_CHECK_FAILED:Agent %p %d:%d,components %d", agent, stream->id, c + 1, components);
       agent_signal_component_state_change (agent, 
 					   stream->id,
 					   (c + 1), /* component-id */
@@ -3717,7 +3718,7 @@ conn_check_prune_socket (NiceAgent *agent, NiceStream *stream, NiceComponent *co
   if (component->selected_pair.local &&
       component->selected_pair.local->sockptr == sock &&
       component->state == NICE_COMPONENT_STATE_READY) {
-    nice_debug ("Agent %p: Selected pair socket %p has been destroyed, "
+    nice_debug ("XXXXXXXXXXXXX:FAILED:Agent %p: Selected pair socket %p has been destroyed, "
         "declaring failed", agent, sock);
     agent_signal_component_state_change (agent,
         stream->id, component->id, NICE_COMPONENT_STATE_FAILED);

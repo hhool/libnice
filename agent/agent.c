@@ -1416,6 +1416,7 @@ static void priv_pseudo_tcp_error (NiceAgent *agent, NiceStream *stream,
   }
 
   if (component->tcp) {
+    nice_debug ("XXXXXXXXXXXXX:FAILED:Agent %p %d:%d", agent, stream->id, component->id);
     agent_signal_component_state_change (agent, stream->id,
         component->id, NICE_COMPONENT_STATE_FAILED);
     nice_component_detach_all_sockets (component);
@@ -4876,7 +4877,7 @@ component_io_cb (GSocket *gsocket, GIOCondition condition, gpointer user_data)
     if (component->selected_pair.local &&
         component->selected_pair.local->sockptr == socket_source->socket &&
         component->state == NICE_COMPONENT_STATE_READY) {
-      nice_debug ("Agent %p: Selected pair socket %p has HUP, declaring failed",
+      nice_debug ("XXXXXXXXXXXXX:FAILED:Agent %p: Selected pair socket %p has HUP, declaring failed",
           agent, socket_source->socket);
       agent_signal_component_state_change (agent,
           stream->id, component->id, NICE_COMPONENT_STATE_FAILED);

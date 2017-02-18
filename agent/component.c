@@ -172,6 +172,7 @@ nice_component_remove_socket (NiceComponent *cmp, NiceSocket *nsocket)
 
     if (candidate == cmp->selected_pair.local) {
       nice_component_clear_selected_pair (cmp);
+      nice_debug ("XXXXXXXXXXXXX:FAILED:Agent %p %d:%d", cmp->agent, cmp->stream->id, cmp->id);
       agent_signal_component_state_change (cmp->agent, cmp->stream->id,
           cmp->id, NICE_COMPONENT_STATE_FAILED);
     }
