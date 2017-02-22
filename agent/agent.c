@@ -1265,7 +1265,7 @@ nice_agent_set_property (
   NiceAgent *agent = NICE_AGENT (object);
 
   agent_lock();
-
+  nice_debug("hhool:nice_agent_set_property");
   switch (property_id)
     {
     case PROP_MAIN_CONTEXT:
@@ -1294,11 +1294,15 @@ nice_agent_set_property (
       break;
 
     case PROP_CONTROLLING_MODE:
+      nice_debug("hhool:nice_agent_set_property:agent->controlling_mode %d before", agent->controlling_mode);
       agent->controlling_mode = g_value_get_boolean (value);
+      nice_debug("hhool:nice_agent_set_property:agent->controlling_mode %d after", agent->controlling_mode);
       break;
 
     case PROP_FULL_MODE:
+      nice_debug("hhool:nice_agent_set_property:agent->full_mode %d before", agent->full_mode);
       agent->full_mode = g_value_get_boolean (value);
+      nice_debug("hhool:nice_agent_set_property:agent->full_mode %d after", agent->full_mode);
       break;
 
     case PROP_STUN_PACING_TIMER:
@@ -1416,7 +1420,7 @@ static void priv_pseudo_tcp_error (NiceAgent *agent, NiceStream *stream,
   }
 
   if (component->tcp) {
-    nice_debug ("XXXXXXXXXXXXX:FAILED:Agent %p %d:%d", agent, stream->id, component->id);
+    nice_debug ("hhool:FAILED:Agent %p %d:%d", agent, stream->id, component->id);
     agent_signal_component_state_change (agent, stream->id,
         component->id, NICE_COMPONENT_STATE_FAILED);
     nice_component_detach_all_sockets (component);
@@ -4877,7 +4881,7 @@ component_io_cb (GSocket *gsocket, GIOCondition condition, gpointer user_data)
     if (component->selected_pair.local &&
         component->selected_pair.local->sockptr == socket_source->socket &&
         component->state == NICE_COMPONENT_STATE_READY) {
-      nice_debug ("XXXXXXXXXXXXX:FAILED:Agent %p: Selected pair socket %p has HUP, declaring failed",
+      nice_debug ("hhool:FAILED:Agent %p: Selected pair socket %p has HUP, declaring failed",
           agent, socket_source->socket);
       agent_signal_component_state_change (agent,
           stream->id, component->id, NICE_COMPONENT_STATE_FAILED);

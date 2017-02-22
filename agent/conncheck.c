@@ -494,7 +494,7 @@ static gboolean priv_conn_check_tick_stream (NiceStream *stream, NiceAgent *agen
     /* note: keep the timer going as long as there is work to be done */
   if (s_inprogress)
     keep_timer_going = TRUE;
-  
+  nice_debug ("hhool:agent %p, controlling_mode %d", agent, agent->controlling_mode);
     /* note: if some components have established connectivity,
      *       but yet no nominated pair, keep timer going */
   if (s_nominated < stream->n_components &&
@@ -715,7 +715,7 @@ static gboolean priv_conn_keepalive_retransmissions_tick (gpointer pointer)
               "but media was received. Suspecting keepalive lost because of "
               "network bottleneck", pair->keepalive.agent);
         } else {
-          nice_debug ("XXXXXXXXXXXXX:FAILED:Agent %p : Keepalive conncheck timed out!! "
+          nice_debug ("hhool:FAILED:Agent %p : Keepalive conncheck timed out!! "
               "peer probably lost connection", pair->keepalive.agent);
           agent_signal_component_state_change (pair->keepalive.agent,
               pair->keepalive.stream_id, pair->keepalive.component_id,
@@ -1492,10 +1492,10 @@ static void priv_update_check_list_failed_components (NiceAgent *agent, NiceStre
      * Set the component to FAILED only if it actually had remote candidates
      * that failed.. */
     if (i == NULL && comp != NULL && comp->remote_candidates != NULL) {
-      nice_debug("XXXXXXXXXXXXX:FAILED:NICE_CHECK_FAILED:Agent %p %d:%d,components %d", agent, stream->id, c + 1, components);
+      nice_debug("hhool:FAILED:NICE_CHECK_FAILED:Agent %p %d:%d,components %d", agent, stream->id, c + 1, components);
       agent_signal_component_state_change (agent, 
 					   stream->id,
-					   (c + 1), /* component-id */
+					   (c + 1), *//* component-id */
 					   NICE_COMPONENT_STATE_FAILED);
     }
   }
@@ -2434,7 +2434,9 @@ static void priv_reply_to_conn_check (NiceAgent *agent, NiceStream *stream,
   if (nice_debug_is_enabled ()) {
     gchar tmpbuf[INET6_ADDRSTRLEN];
     nice_address_to_string (toaddr, tmpbuf);
-    nice_debug ("Agent %p : STUN-CC RESP to '%s:%u', socket=%u, len=%u, cand=%p (c-id:%u), use-cand=%d.", agent,
+    nice_debug ("Agent %p : full_mode %d,  controlling_mode %d, STUN-CC RESP to '%s:%u', socket=%u, len=%u, cand=%p (c-id:%u), use-cand=%d.", agent,
+       agent->controlling_mode,
+       agent->full_mode,
 	     tmpbuf,
 	     nice_address_get_port (toaddr),
              sockptr->fileno ? g_socket_get_fd(sockptr->fileno) : -1,
@@ -3719,7 +3721,7 @@ conn_check_prune_socket (NiceAgent *agent, NiceStream *stream, NiceComponent *co
   if (component->selected_pair.local &&
       component->selected_pair.local->sockptr == sock &&
       component->state == NICE_COMPONENT_STATE_READY) {
-    nice_debug ("XXXXXXXXXXXXX:FAILED:Agent %p: Selected pair socket %p has been destroyed, "
+    nice_debug ("hhool:FAILED:Agent %p: Selected pair socket %p has been destroyed, "
         "declaring failed", agent, sock);
     agent_signal_component_state_change (agent,
         stream->id, component->id, NICE_COMPONENT_STATE_FAILED);
