@@ -1495,7 +1495,7 @@ static void priv_update_check_list_failed_components (NiceAgent *agent, NiceStre
       nice_debug("hhool:FAILED:NICE_CHECK_FAILED:Agent %p %d:%d,components %d", agent, stream->id, c + 1, components);
       agent_signal_component_state_change (agent, 
 					   stream->id,
-					   (c + 1), *//* component-id */
+					   (c + 1), /* component-id */
 					   NICE_COMPONENT_STATE_FAILED);
     }
   }
