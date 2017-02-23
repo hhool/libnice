@@ -2434,9 +2434,9 @@ static void priv_reply_to_conn_check (NiceAgent *agent, NiceStream *stream,
   if (nice_debug_is_enabled ()) {
     gchar tmpbuf[INET6_ADDRSTRLEN];
     nice_address_to_string (toaddr, tmpbuf);
-    nice_debug ("Agent %p : full_mode %d,  controlling_mode %d, STUN-CC RESP to '%s:%u', socket=%u, len=%u, cand=%p (c-id:%u), use-cand=%d.", agent,
-       agent->controlling_mode,
+    nice_debug ("Agent %p : full_mode %d, controlling_mode %d, STUN-CC RESP to '%s:%u', socket=%u, len=%u, cand=%p (c-id:%u), use-cand=%d.", agent,
        agent->full_mode,
+       agent->controlling_mode,
 	     tmpbuf,
 	     nice_address_get_port (toaddr),
              sockptr->fileno ? g_socket_get_fd(sockptr->fileno) : -1,
