@@ -494,7 +494,7 @@ static gboolean priv_conn_check_tick_stream (NiceStream *stream, NiceAgent *agen
     /* note: keep the timer going as long as there is work to be done */
   if (s_inprogress)
     keep_timer_going = TRUE;
-  nice_debug ("hhool:agent %p, controlling_mode %d", agent, agent->controlling_mode);
+    
     /* note: if some components have established connectivity,
      *       but yet no nominated pair, keep timer going */
   if (s_nominated < stream->n_components &&
