@@ -1265,7 +1265,6 @@ nice_agent_set_property (
   NiceAgent *agent = NICE_AGENT (object);
 
   agent_lock();
-  nice_debug("hhool:nice_agent_set_property");
   switch (property_id)
     {
     case PROP_MAIN_CONTEXT:
@@ -1294,15 +1293,13 @@ nice_agent_set_property (
       break;
 
     case PROP_CONTROLLING_MODE:
-      nice_debug("hhool:nice_agent_set_property:agent->controlling_mode %d before", agent->controlling_mode);
       agent->controlling_mode = g_value_get_boolean (value);
-      nice_debug("hhool:nice_agent_set_property:agent->controlling_mode %d after", agent->controlling_mode);
+      nice_debug("nice_agent_set_property:agent %p agent->controlling_mode %d", agent, agent->controlling_mode);
       break;
 
     case PROP_FULL_MODE:
-      nice_debug("hhool:nice_agent_set_property:agent->full_mode %d before", agent->full_mode);
       agent->full_mode = g_value_get_boolean (value);
-      nice_debug("hhool:nice_agent_set_property:agent->full_mode %d after", agent->full_mode);
+      nice_debug("nice_agent_set_property:agent %p agent->full_mode %d", agent, agent->full_mode);
       break;
 
     case PROP_STUN_PACING_TIMER:
@@ -1350,6 +1347,7 @@ nice_agent_set_property (
 
     case PROP_RELIABLE:
       agent->reliable = g_value_get_boolean (value);
+      nice_debug("nice_agent_set_property:agent %p agent->reliable %d", agent, agent->reliable);
       break;
 
       /* Don't allow ice-udp and ice-tcp to be disabled at the same time */
@@ -3071,6 +3069,7 @@ nice_agent_set_port_range (NiceAgent *agent, guint stream_id, guint component_id
     if (stream->gathering_started) {
       g_critical ("nice_agent_gather_candidates (stream_id=%u) already called for this stream", stream_id);
     } else {
+      nice_debug("Agent %p: min_port %d max_port %d", agent, min_port, max_port);
       component->min_port = min_port;
       component->max_port = max_port;
     }
