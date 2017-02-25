@@ -1294,12 +1294,12 @@ nice_agent_set_property (
 
     case PROP_CONTROLLING_MODE:
       agent->controlling_mode = g_value_get_boolean (value);
-      nice_debug("nice_agent_set_property:agent %p agent->controlling_mode %d", agent, agent->controlling_mode);
+      nice_debug("hhool:nice_agent_set_property:agent %p agent->controlling_mode %d", agent, agent->controlling_mode);
       break;
 
     case PROP_FULL_MODE:
       agent->full_mode = g_value_get_boolean (value);
-      nice_debug("nice_agent_set_property:agent %p agent->full_mode %d", agent, agent->full_mode);
+      nice_debug("hhool:nice_agent_set_property:agent %p agent->full_mode %d", agent, agent->full_mode);
       break;
 
     case PROP_STUN_PACING_TIMER:

@@ -1492,7 +1492,8 @@ static void priv_update_check_list_failed_components (NiceAgent *agent, NiceStre
      * Set the component to FAILED only if it actually had remote candidates
      * that failed.. */
     if (i == NULL && comp != NULL && comp->remote_candidates != NULL) {
-      nice_debug("hhool:FAILED:NICE_CHECK_FAILED:Agent %p %d:%d,components %d", agent, stream->id, c + 1, components);
+      nice_debug("hhool:FAILED:NICE_CHECK_FAILED:Agent %p controlling_mode %d, %d:%d,components %d",
+        agent, agent->controlling_mode, stream->id, c + 1, components);
       agent_signal_component_state_change (agent, 
 					   stream->id,
 					   (c + 1), /* component-id */
